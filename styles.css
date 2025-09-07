@@ -1,0 +1,179 @@
+header{
+    background-color: darkcyan;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /*coloca los items uno debajo de otro*/
+}
+
+header.img{
+    margin-bottom:  15px; /*añade espacio debajo del logo*/
+}
+
+body{
+      font-family: "Bebas Neue", "Lora", sans-serif;
+}
+
+footer{
+    font-style: italic;
+    background-color: darkcyan;
+    text-align: center;
+    padding: 20px;
+}
+
+footer a{
+    color: #333; /* Cambia el color de los íconos */;
+    font-size: 24px; /* Cambia el tamaño de los íconos */
+    margin: 0 10px; /* Añade espacio entre los íconos */
+    text-decoration: none;
+}
+
+footer a:hover{
+    color: #032141; /* Cambia de color al pasar el cursor */
+}
+
+.nav-list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list a{
+    text-decoration: none;
+    color: rgb(7, 16, 133);
+}
+
+.productos{
+    display: flex;
+    justify-content: center; /* Opcional: Centra los elementos en el contenedor */
+    align-items: flex-start; /* Opcional: Alinea los elementos en la parte superior */
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.producto-card{
+    flex-basis: 300px; /* Tamaño base para las tarjetas */
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.producto-card img {
+    width: 400px;
+    height: 400px;
+    object-fit: contain; /* Evita que las imágenes se distorsionen */
+}
+
+/* Estilos para el contenedor de reseñas con CSS Grid */
+.reseñas{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 40px;
+}
+
+/* Estilos para las tarjetas de testimonio */
+.card{
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+/* Estilo para los nombres */
+.card h3{
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Estilo para la opinión del cliente */
+.card p{
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Estilo para los íconos de estrellas de Font Awesome */
+.card i.fas.fa-star, .card i.fas.fa-star-half-alt{
+    color: #ffd700;  /* Color dorado para las estrellas */
+    margin-bottom: 10px;
+}
+
+/* Efecto de pseudo-clase al pasar el mouse */
+.card:hover{
+    transform: translate(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Estilos para pantallas grandes (opcional, para claridad) --- */
+form{
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+form input, form textarea{
+    width: 100%;
+    box-sizing: border-box; /* Asegura que el padding no añada más ancho */
+}
+
+/* --- Media Query para dispositivos móviles y tablets pequeñas --- */
+@media (max-width: 768px){
+    /*Adaptar la seccion de reseñas*/
+    .reseñas{
+        grid-template-columns: 1fr; /* Una sola columna para las tarjetas */
+        padding: 20px;  /* Reduce el padding para pantallas pequeñas */
+    }
+
+    /*Adaptar el formulario de contacto*/
+    #contacto{
+        padding: 20px; /* Ajusta el padding de la sección */
+    }
+
+    form{
+        padding: 10px;  /* Ajusta el padding del formulario */
+    }
+
+    form input, form textarea{
+        margin-bottom: 15px; /*Agrega espacio entre los campos*/
+        padding: 12px;
+        font-size: 16px;
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;       
+    }
+
+     /* Efecto al enfocar los campos del formulario */
+     form input:focus, form textarea:focus{
+        border-color: #007bff; /* Cambia el color del borde al enfocar */
+        outline: none; /* Elimina el borde de enfoque predeterminado del navegador */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) /* Agrega una sombra sutil */
+    } 
+
+    /* Adaptar el logo del header */
+    header img {
+        width: 100%; /* El ancho ocupará el 100% del contenedor */
+        height: auto; /* La altura se ajustará automáticamente */
+    }
+
+    /* Adaptar la navegación para que los enlaces no se salgan de la pantalla */
+    .nav-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Ajustar las cards de productos */
+    .producto-card {
+        flex-basis: 100%; /* Cada card ocupará todo el ancho disponible */
+    }
+
+    .producto-card img {
+        width: 100%;
+        height: auto;
+    }
+}
