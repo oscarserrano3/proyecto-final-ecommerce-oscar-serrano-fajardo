@@ -1,177 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imax - Tu Tienda Apple de Confianza</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet"/>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imax</title>
 </head>
 <body>
-   <header>
-    <img src="logo.png" alt="El nombre Imax en letras grises en un fondo blanco" width="700" height="700">
-    <nav>
-        <ul class="nav-list">
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/nosotros">Acerca de nosotros</a></li>
-            <li><a href="/servicios">Servicios</a></li>
-            <li><a href="/contacto">Contacto</a></li>
-        </ul>
-    </nav>
-   </header> 
-   <main>       
-        <h1>Imax</h1>
-        <p>Es una de las tiendas de Apple más grandes y confiables de Argentina, con más de 17 años de experiencia en el mercado. Ofrece una amplia selección de iPhones nuevos y seminuevos, con opciones para todos los presupuestos.</p>
-        <video controls poster="preview.jpg" width="600" height="400">
-  <source src="video.mp4" type="video/mp4">
-        <track src="subtitulos.vtt" kind="subtitles" srclang="es" label="Español">
-        </video>
-        <section>
-            <h2>Qué hacemos</h2>
-            <article>
-                <p>Además de nuestra especialización en iPhones, en Imax también puedes encontrar otros productos icónicos de Apple, como iPads, MacBooks y Apple Watches. Contamos con una sólida presencia tanto en tiendas físicas a lo largo de Argentina como en nuestra plataforma de comercio electrónico, brindando a nuestros clientes la flexibilidad de comprar desde donde se encuentren.
+    <header class="main-header">
+        <div class="header-logo">
+            <img src="logo.png" alt="Logotipo de la tienda Imax">
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/nosotros">Acerca de nosotros</a></li>
+                <li><a href="/servicios">Servicios</a></li>
+                <li><a href="/contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header> 
 
-Nuestro enfoque es ser más que una simple tienda; somos una estación central para los productos Apple, donde la calidad y el servicio se unen para crear una experiencia de compra inigualable.</p>
+    <main> 
+        <section class="hero-section">
+            <h1 class="hero-title">Imax</h1>
+            <p class="hero-subtitle">Es una de las tiendas de Apple más grandes y confiables de Argentina, con más de 17 años de experiencia en el mercado. Ofrece una amplia selección de iPhones nuevos y seminuevos, con opciones para todos los presupuestos.</p>
+            <video controls poster="preview.jpg" class="hero-video">
+                <source src="video.mp4" type="video/mp4">
+                <track src="subtitulos.vtt" kind="subtitles" srclang="es" label="Español">
+            </video>
         </section>
 
-        <section class="productos">
-
-            <article class="producto-card">
-                <img src="IPhone_15_Plus.webp" alt="iPhone 15">
-                <h3><span>iPhone 15</span></h3>
-                <p>El iPhone 15 presenta la Dynamic Island, una cámara de 48 MP y USB-C.</p>
-                <span class="precio-destacado">$999</span>
-                <button class="agregar-carrito">
-                    <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                </button>
+        <section class="about-section">
+            <h2 class="section-title">Qué hacemos</h2>
+            <article class="about-content">
+                <p>Además de nuestra especialización en iPhones, en Imax también puedes encontrar otros productos icónicos de Apple, como iPads, MacBooks y Apple Watches. Contamos con una sólida presencia tanto en tiendas físicas a lo largo de Argentina como en nuestra plataforma de comercio electrónico, brindando a nuestros clientes la flexibilidad de comprar desde donde se encuentren.</p>
+                <p>Nuestro enfoque es ser más que una simple tienda; somos una estación central para los productos Apple, donde la calidad y el servicio se unen para crear una experiencia de compra inigualable.</p>
             </article>
-
-            <article class="producto-card">
-                <img src="MacBookAirM2.webp" alt="MacBook Air M2">
-                <h3><span>MacBook Air M2</span></h3>
-                <p>Ultradelgado y potente con el chip M2. Duración de batería para todo el día</p>
-                <span class="precio-destacado">$1,199</span>
-                <button class="agregar-carrito">
-                    <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                </button>
-            </article>
-
-            <article class="producto-card">
-                <img src="AppleWatchSeries9.webp" alt="Apple Watch Series 9">
-                <h3><span>Apple Watch Series 9</span></h3>
-                <p>Diseño avanzado con nuevas funciones de salud y seguridad. Un compañero esencial.</p>
-                <span class="precio-destacado">$399</span>
-                <button class="agregar-carrito">
-                    <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                </button>
-            </article>
-
         </section>
 
+        <section class="product-grid" aria-labelledby="products-heading">
+            <h2 id="products-heading" class="section-title">Nuestros Productos</h2>
+            <div class="product-list">
+                <article class="product-item">
+                    <img src="IPhone_15_Plus.webp" alt="iPhone 15">
+                    <h3>iPhone 15</h3>
+                    <p>El iPhone 15 presenta la Dynamic Island, una cámara de 48 MP y USB-C.</p>
+                    <span class="product-price">$999</span>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
+                    </button>
+                </article>
 
-        <section class="reseñas">
-            <h2>Nuestros clientes opinan</h2>
-            <section class="card">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <h3>Ana G.</h3>
-                <p>¡Excelente servicio y productos de alta calidad! Encontré exactamente el MacBook que buscaba.</p>                
-            </section>
+                <article class="product-item">
+                    <img src="MacBookAirM2.webp" alt="MacBook Air M2">
+                    <h3>MacBook Air M2</h3>
+                    <p>Ultradelgado y potente con el chip M2. Duración de batería para todo el día</p>
+                    <span class="product-price">$1,199</span>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
+                    </button>
+                </article>
 
-            <section class="card">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <h3>Javier T.</h3>
-                <p>Muy buena atención. El proceso de compra fue sencillo y mi iPhone llegó en perfecto estado.</p>
-             </section>
+                <article class="product-item">
+                    <img src="AppleWatchSeries9.webp" alt="Apple Watch Series 9">
+                    <h3>Apple Watch Series 9</h3>
+                    <p>Diseño avanzado con nuevas funciones de salud y seguridad. Un compañero esencial.</p>
+                    <span class="product-price">$399</span>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
+                    </button>
+                </article>
+            </div>
+        </section>
 
-            <section class="card">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <h3>Sofía L.</h3>
-                <p>Precios competitivos y gran variedad. Mi Apple Watch superó mis expectativas.</p>
-            </section>
+        <section class="reviews-section" aria-labelledby="reviews-heading">
+            <h2 id="reviews-heading" class="section-title">Nuestros clientes opinan</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="review-author">Ana G.</h3>
+                    <p class="review-text">¡Excelente servicio y productos de alta calidad! Encontré exactamente el MacBook que buscaba.</p> 
+                </div>
 
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <h3 class="review-author">Javier T.</h3>
+                    <p class="review-text">Muy buena atención. El proceso de compra fue sencillo y mi iPhone llegó en perfecto estado.</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="review-author">Sofía L.</h3>
+                    <p class="review-text">Precios competitivos y gran variedad. Mi Apple Watch superó mis expectativas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="messages-section" aria-labelledby="messages-heading">
+            <h2 id="messages-heading" class="section-title">Mensajes recientes</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Mensaje Corto</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Juan Pérez</td>
+                            <td>juan@ejemplo.com</td>
+                            <td>Consulta sobre precios de iPhone 15.</td>
+                            <td>Respondido</td>
+                        </tr>
+                        <tr>
+                            <td>María López</td>
+                            <td>maria@correo.es</td>
+                            <td>Pregunta sobre financiamiento en iPads.</td>
+                            <td>Respondido</td>
+                        </tr>
+                        <tr>
+                            <td>Carlos Gómez</td>
+                            <td>carlos@gmail.com</td>
+                            <td>Quería saber si tienen servicio técnico.</td>
+                            <td>Respondido</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="pending-messages">Mensajes pendientes de respuesta: 2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
         
-        <h2>Mensajes recientes</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Mensaje Corto</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Juan Pérez</td>
-                    <td>juan@ejemplo.com</td>
-                    <td>Consulta sobre precios de iPhone 15.</td>
-                    <td>Respondido</td>
-                </tr>
-
-                <tr>
-                    <td>María López</td>
-                    <td>maria@correo.es</td>
-                    <td>Pregunta sobre financiamiento en iPads.</td>
-                    <td>Respondido</td>
-                </tr>
-
-                <tr>
-                    <td>Carlos Gómez</td>
-                    <td>carlos@gmail.com</td>
-                    <td>Quería saber si tienen servicio técnico.</td>
-                    <td>Respondido</td>
-                </tr>
-
-                <tr>
-                    <td colspan="4">Mensajes pendientes de respuesta: 2</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <section>
+        <section class="contact-section" aria-labelledby="contact-heading">
+            <h2 id="contact-heading" class="section-title">Contáctanos</h2>
             <form action="https://formspree.io/mkgvoopq" method="POST">
-                <h2>Contáctanos</h2>
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-                
-                <label for="email">Correo electrónico:</label>
-                <input type="email" id="email" name="email" required>
-                
-                <label for="mensaje">Mensaje:</label>
-                <textarea id="mensaje" name="mensaje" rows="4" cols="50" required></textarea>
-                
-                <button type="submit">Enviar</button>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Enviar</button>
             </form>
         </section>
+    </main> 
 
-    </main>  
-    <footer>
-        <p>Seguinos en nuestras redes sociales:</p>
-        <div>
+    <footer class="main-footer">
+        <p>Síguenos en nuestras redes sociales:</p>
+        <div class="social-links">
             <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
-                <i class="fab fa-facebook"></i>
+                <i class="fab fa-facebook-f"></i>
             </a>
-
             <a href="https://www.twitter.com" target="_blank" aria-label="Twitter">
                 <i class="fab fa-twitter"></i>
             </a>
-
             <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
                 <i class="fab fa-instagram"></i>
             </a>

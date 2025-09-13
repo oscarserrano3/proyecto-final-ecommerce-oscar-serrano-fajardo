@@ -1,179 +1,369 @@
-header{
-    background-color: darkcyan;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; /*coloca los items uno debajo de otro*/
+/* Variables CSS para una paleta de colores y tipografía */
+:root {
+    --primary-color: #007bff; /* Un azul vibrante */
+    --secondary-color: #2c3e50; /* Un gris oscuro */
+    --tertiary-color: #f8f9fa; /* Un gris muy claro para fondos */
+    --accent-color: #ffc107; /* Un amarillo para acentos, como las estrellas */
+    --text-light: #fefefe;
+    --text-dark: #333;
+    --font-heading: 'Bebas Neue', sans-serif;
+    --font-body: 'Lora', serif;
 }
 
-header.img{
-    margin-bottom:  15px; /*añade espacio debajo del logo*/
-}
-
-body{
-      font-family: "Bebas Neue", "Lora", sans-serif;
-}
-
-footer{
-    font-style: italic;
-    background-color: darkcyan;
-    text-align: center;
-    padding: 20px;
-}
-
-footer a{
-    color: #333; /* Cambia el color de los íconos */;
-    font-size: 24px; /* Cambia el tamaño de los íconos */
-    margin: 0 10px; /* Añade espacio entre los íconos */
-    text-decoration: none;
-}
-
-footer a:hover{
-    color: #032141; /* Cambia de color al pasar el cursor */
-}
-
-.nav-list{
-    list-style: none;
+/* Estilos Generales y Reseteo Básico */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-.nav-list a{
-    text-decoration: none;
-    color: rgb(7, 16, 133);
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--tertiary-color);
 }
 
-.productos{
-    display: flex;
-    justify-content: center; /* Opcional: Centra los elementos en el contenedor */
-    align-items: flex-start; /* Opcional: Alinea los elementos en la parte superior */
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.producto-card{
-    flex-basis: 300px; /* Tamaño base para las tarjetas */
-    border: 1px solid #ccc;
-    padding: 20px;
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--secondary-color);
     text-align: center;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
 }
 
-.producto-card img {
-    width: 400px;
-    height: 400px;
-    object-fit: contain; /* Evita que las imágenes se distorsionen */
+/* Header */
+.main-header {
+    background-color: var(--secondary-color);
+    color: var(--text-light);
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-/* Estilos para el contenedor de reseñas con CSS Grid */
-.reseñas{
+.header-logo img {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.main-nav .nav-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.main-nav .nav-list a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.main-nav .nav-list a:hover {
+    color: var(--primary-color);
+}
+
+/* Main Content */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #555;
+}
+
+.hero-video {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* About Section */
+.about-section {
+    padding: 2rem 0;
+}
+
+.about-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Product Grid */
+.product-grid {
+    padding: 2rem 0;
+}
+
+.product-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    padding: 40px;
+    gap: 2rem;
+    align-items: stretch; /* Asegura que todas las tarjetas se estiren a la misma altura */
 }
 
-/* Estilos para las tarjetas de testimonio */
-.card{
-    background-color: #f9f9f9;
-    padding: 20px;
-    border: 1px solid #ddd;
+.product-item {
+    display: flex; /* Convierte la tarjeta en un contenedor flexbox */
+    flex-direction: column; /* Organiza los elementos de arriba a abajo */
+    justify-content: space-between; /* Distribuye el espacio para que el botón esté siempre abajo */
+    background-color: white;
+    padding: 1.5rem;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-item img {
+    width: 100%;
+    height: 220px; /* Fija una altura uniforme para todas las imágenes */
+    object-fit: contain; /* Mantiene la proporción de la imagen sin distorsionarla */
+    margin-bottom: 1rem;
+}
+
+.product-item h3 {
+    flex-grow: 1; /* Permite que este elemento ocupe el espacio extra para empujar el precio y el botón hacia abajo */
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.product-item p{
+    flex-grow: 1; /*Permite que la descripcion se estire*/
+}
+
+.product-price {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    display: block;
+    margin: 1rem 0;
+}
+
+.add-to-cart {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background-color: #0056b3;
+}
+
+/* Reviews Section */
+.reviews-section {
+    padding: 2rem 0;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.review-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+}
+
+.review-stars {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.review-card i {
+    font-size: 1.2rem;
+}
+
+.review-author {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Messages Section (Table) */
+.messages-section {
+    padding: 2rem 0;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+thead {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+thead th {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.pending-messages {
+    font-weight: bold;
+    color: var(--primary-color);
     text-align: center;
 }
 
-/* Estilo para los nombres */
-.card h3{
-    color: #333;
-    font-size: 1.5em;
-    margin-bottom: 10px;
+/* Contact Form */
+.contact-section {
+    padding: 2rem 0;
 }
 
-/* Estilo para la opinión del cliente */
-.card p{
-    color: #666;
-    line-height: 1.6;
-}
-
-/* Estilo para los íconos de estrellas de Font Awesome */
-.card i.fas.fa-star, .card i.fas.fa-star-half-alt{
-    color: #ffd700;  /* Color dorado para las estrellas */
-    margin-bottom: 10px;
-}
-
-/* Efecto de pseudo-clase al pasar el mouse */
-.card:hover{
-    transform: translate(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* --- Estilos para pantallas grandes (opcional, para claridad) --- */
-form{
+form {
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-form input, form textarea{
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
     width: 100%;
-    box-sizing: border-box; /* Asegura que el padding no añada más ancho */
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: var(--font-body);
+    transition: border-color 0.3s ease;
 }
 
-/* --- Media Query para dispositivos móviles y tablets pequeñas --- */
-@media (max-width: 768px){
-    /*Adaptar la seccion de reseñas*/
-    .reseñas{
-        grid-template-columns: 1fr; /* Una sola columna para las tarjetas */
-        padding: 20px;  /* Reduce el padding para pantallas pequeñas */
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.submit-button {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+.main-footer {
+    background-color: var(--secondary-color);
+    color: var(--text-light);
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+}
+
+.main-footer p {
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.social-links a {
+    color: var(--text-light);
+    font-size: 1.8rem;
+    margin: 0 0.8rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
     }
-
-    /*Adaptar el formulario de contacto*/
-    #contacto{
-        padding: 20px; /* Ajusta el padding de la sección */
+    .hero-title {
+        font-size: 3rem;
     }
-
-    form{
-        padding: 10px;  /* Ajusta el padding del formulario */
-    }
-
-    form input, form textarea{
-        margin-bottom: 15px; /*Agrega espacio entre los campos*/
-        padding: 12px;
-        font-size: 16px;
-        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;       
-    }
-
-     /* Efecto al enfocar los campos del formulario */
-     form input:focus, form textarea:focus{
-        border-color: #007bff; /* Cambia el color del borde al enfocar */
-        outline: none; /* Elimina el borde de enfoque predeterminado del navegador */
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) /* Agrega una sombra sutil */
-    } 
-
-    /* Adaptar el logo del header */
-    header img {
-        width: 100%; /* El ancho ocupará el 100% del contenedor */
-        height: auto; /* La altura se ajustará automáticamente */
-    }
-
-    /* Adaptar la navegación para que los enlaces no se salgan de la pantalla */
-    .nav-list {
-        display: flex;
+    .main-nav .nav-list {
         flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    /* Ajustar las cards de productos */
-    .producto-card {
-        flex-basis: 100%; /* Cada card ocupará todo el ancho disponible */
-    }
-
-    .producto-card img {
-        width: 100%;
-        height: auto;
+        gap: 0.8rem;
     }
 }
