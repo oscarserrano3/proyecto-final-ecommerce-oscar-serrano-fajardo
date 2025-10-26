@@ -17,6 +17,10 @@
     padding: 0;
 }
 
+html{
+    scroll-behavior: smooth; /*desplazamiento suave*/
+}
+
 body {
     font-family: var(--font-body);
     line-height: 1.6;
