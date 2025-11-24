@@ -44,3 +44,81 @@ function inicializarDescripcionDinamica() {
 }
 
 inicializarDescripcionDinamica();
+
+/* ==========================================
+   LÓGICA DE PREFERENCIAS DE USUARIO (LOCALSTORAGE)
+   ========================================== */
+
+// 1. Seleccionar elementos del DOM
+const preferencesForm = document.getElementById('preferences-form');
+const nameInput = document.getElementById('pref-name');
+const colorSelect = document.getElementById('pref-bg-color');
+const greetingElement = document.getElementById('saludo-usuario');
+const btnBorrar = document.getElementById('btn-borrar-pref');
+
+// 2. Función para aplicar las preferencias (UI Update)
+function aplicarPreferencias(nombre, color) {
+    // Aplicar color de fondo al body
+    if (color) {
+        document.body.style.backgroundColor = color;
+        // También actualizamos el valor del select para que coincida
+        colorSelect.value = color; 
+    }
+
+    // Aplicar saludo personalizado
+    if (nombre) {
+        greetingElement.textContent = `¡Hola de nuevo, ${nombre}!`;
+        // Actualizamos el input para que el usuario vea su nombre
+        nameInput.value = nombre; 
+    } else {
+        greetingElement.textContent = ""; // Limpiar si no hay nombre
+    }
+}
+
+// 3. Función para cargar datos al iniciar (Leer de LocalStorage)
+function cargarPreferencias() {
+    const nombreGuardado = localStorage.getItem('usuarioNombre');
+    const colorGuardado = localStorage.getItem('usuarioColor');
+
+    if (nombreGuardado || colorGuardado) {
+        aplicarPreferencias(nombreGuardado, colorGuardado);
+        console.log("Preferencias cargadas desde LocalStorage");
+    }
+}
+
+// 4. Evento SUBMIT del formulario (Guardar en LocalStorage)
+preferencesForm.addEventListener('submit', (evento) => {
+    // Prevenir que la página se recargue
+    evento.preventDefault(); 
+
+    // Capturar valores
+    const nombre = nameInput.value;
+    const color = colorSelect.value;
+
+    // Guardar en LocalStorage
+    localStorage.setItem('usuarioNombre', nombre);
+    localStorage.setItem('usuarioColor', color);
+
+    // Aplicar los cambios inmediatamente para dar feedback visual
+    aplicarPreferencias(nombre, color);
+
+    alert('¡Preferencias guardadas con éxito!');
+});
+
+// 5. Evento para borrar preferencias (Opcional pero útil)
+btnBorrar.addEventListener('click', () => {
+    localStorage.removeItem('usuarioNombre');
+    localStorage.removeItem('usuarioColor');
+    
+    // Restaurar valores por defecto
+    document.body.style.backgroundColor = ''; // Vuelve al color del CSS original
+    greetingElement.textContent = '';
+    nameInput.value = '';
+    colorSelect.selectedIndex = 0;
+    
+    alert('Preferencias borradas.');
+});
+
+// 6. Ejecutar carga al inicio
+// "DOMContentLoaded" asegura que el HTML esté listo antes de ejecutar JS
+document.addEventListener('DOMContentLoaded', cargarPreferencias);

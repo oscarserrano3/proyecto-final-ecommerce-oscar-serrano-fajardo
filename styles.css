@@ -416,3 +416,49 @@ textarea:focus {
     display: none; 
 }
 */
+
+/* --- ESTILOS NUEVOS PARA PREFERENCIAS --- */
+
+.preferences-section {
+    padding: 2rem 0;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparente para que se note el cambio de fondo */
+}
+
+.preferences-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.preferences-container p {
+    margin-bottom: 1.5rem;
+    color: #666;
+}
+
+/* Estilo para el saludo dinámico en el Hero */
+.greeting-text {
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    min-height: 2.5rem; /* Reserva espacio para que no "salte" al cargar */
+}
+
+/* Botón extra para borrar preferencias */
+.reset-button {
+    width: 100%;
+    color: var(--text-light);
+    border: none;
+    padding: 0.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.reset-button:hover {
+    background-color: #a71d2a;
+}

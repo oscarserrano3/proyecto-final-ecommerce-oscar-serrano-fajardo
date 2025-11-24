@@ -27,6 +27,7 @@
 
     <main> 
         <section class="hero-section" id="inicio">
+            <h2 id="saludo-usuario" class="greeting-text"></h2>
             <h1 class="hero-title">Imax</h1>
             <p class="hero-subtitle">Es una de las tiendas de Apple más grandes y confiables de Argentina, con más de 17 años de experiencia en el mercado. Ofrece una amplia selección de iPhones nuevos y seminuevos, con opciones para todos los presupuestos.</p>
             <video controls poster="preview.jpg" class="hero-video">
@@ -155,6 +156,31 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </section>
+
+        <section class="preferences-section" aria-labelledby="pref-heading" id="preferencias">
+            <h2 id="pref-heading" class="section-title">Personaliza tu experiencia</h2>
+            <div class="preferences-container">
+                <p>Elige cómo quieres ver nuestra tienda y guardaremos tu elección.</p>
+                <form id="preferences-form">
+                    <div class="form-group">
+                        <label for="pref-name">Tu Nombre:</label>
+                        <input type="text" id="pref-name" placeholder="Ej: Juan" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pref-bg-color">Color de Fondo Favorito:</label>
+                        <select id="pref-bg-color">
+                            <option value="#f8f9fa">Clásico (Gris Claro)</option>
+                            <option value="#e3f2fd">Azul Cielo</option>
+                            <option value="#fff3e0">Cálido (Naranja suave)</option>
+                            <option value="#e8f5e9">Naturaleza (Verde suave)</option>
+                            <option value="#f3e5f5">Lavanda</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-button">Guardar Preferencias</button>
+                    <button type="button" id="btn-borrar-pref" class="reset-button" style="margin-top:10px; background-color:#dc3545;">Borrar Preferencias</button>
+                </form>
             </div>
         </section>
         
