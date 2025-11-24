@@ -122,3 +122,92 @@ btnBorrar.addEventListener('click', () => {
 // 6. Ejecutar carga al inicio
 // "DOMContentLoaded" asegura que el HTML esté listo antes de ejecutar JS
 document.addEventListener('DOMContentLoaded', cargarPreferencias);
+
+/* ==========================================
+   LÓGICA DEL CARRITO DE COMPRAS
+   ========================================== */
+
+// 1. Seleccionar elementos del DOM
+// Botones de "Agregar al carrito"
+const addToCartButtons = document.querySelectorAll('.add-to-cart');
+// El elemento donde mostramos el número
+const cartCounterElement = document.getElementById('cart-counter');
+
+// 2. Función para inicializar el carrito
+function inicializarCarrito() {
+    // Recuperar el número guardado en LocalStorage
+    // Si no existe (es null), usamos '0'
+    const countGuardado = localStorage.getItem('cartCount');
+    
+    if (countGuardado) {
+        cartCounterElement.textContent = countGuardado;
+    } else {
+        cartCounterElement.textContent = '0';
+    }
+}
+
+// 3. Función para actualizar el contador
+function actualizarContador() {
+    // Obtener el valor actual del texto y convertirlo a número entero
+    let countActual = parseInt(cartCounterElement.textContent);
+    
+    // Aumentar la cantidad
+    countActual++;
+    
+    // Actualizar el DOM (el texto en la pantalla)
+    cartCounterElement.textContent = countActual;
+    
+    // Guardar el nuevo valor en LocalStorage
+    localStorage.setItem('cartCount', countActual);
+    
+    // Efecto visual extra (opcional): animación pequeña
+    cartCounterElement.classList.add('updated');
+    setTimeout(() => {
+        cartCounterElement.classList.remove('updated');
+    }, 200);
+}
+
+// 4. Asignar el evento a TODOS los botones
+addToCartButtons.forEach(boton => {
+    boton.addEventListener('click', () => {
+        actualizarContador();
+        
+        // Feedback visual para el usuario (opcional)
+        // Cambia el texto del botón temporalmente
+        const textoOriginal = boton.innerHTML;
+        boton.innerHTML = '<i class="fas fa-check"></i> ¡Agregado!';
+        boton.style.backgroundColor = '#28a745'; // Verde
+        
+        setTimeout(() => {
+            boton.innerHTML = textoOriginal;
+            boton.style.backgroundColor = ''; // Volver al color original
+        }, 1000);
+    });
+});
+
+// 5. Ejecutar la inicialización al cargar la página
+// (Podemos agregarlo al listener que ya tienes de DOMContentLoaded o dejarlo correr aquí si el script está al final del body)
+document.addEventListener('DOMContentLoaded', inicializarCarrito);
+
+/* ==========================================
+   LÓGICA PARA VACIAR EL CARRITO
+   ========================================== */
+
+const btnVaciar = document.getElementById('btn-vaciar-carrito');
+
+btnVaciar.addEventListener('click', () => {
+    // 1. Preguntar confirmación (opcional pero recomendado)
+    const confirmar = confirm('¿Estás seguro de que quieres vaciar el carrito?');
+
+    if (confirmar) {
+        // 2. Reiniciar el localStorage
+        localStorage.removeItem('cartCount'); 
+        // O también podrías usar: localStorage.setItem('cartCount', 0);
+
+        // 3. Reiniciar el contador visual en el DOM
+        cartCounterElement.textContent = '0';
+
+        // 4. Feedback visual (alerta pequeña)
+        alert('El carrito ha sido vaciado.');
+    }
+});
