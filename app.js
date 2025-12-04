@@ -1,4 +1,4 @@
-// 💡 CAMBIO: Declaración de selectores globales al inicio para que las funciones del carrito los encuentren.
+// Declaración de selectores globales al inicio para que las funciones del carrito los encuentren.
 
 // Selectores del DOM para la sección de Preferencias
 const preferencesForm = document.getElementById('preferences-form');
@@ -14,7 +14,7 @@ const btnVaciar = document.getElementById('btn-vaciar-carrito');
 // Selectores del DOM para la carga de la API
 const API_URL = 'https://fakestoreapi.com/products?limit=6';
 const productosContainer = document.getElementById('productos-container'); 
-// Asumimos que tienes un div con id="productos-container" debajo del product-grid en tu HTML si usas la API.
+
 
 
 function inicializarDescripcionDinamica() {
@@ -45,7 +45,7 @@ function inicializarDescripcionDinamica() {
         }
 
         // 1. Ocultar la descripción por defecto al cargar el script
-        // 💡 REQUERIMIENTO: Necesitas una clase CSS '.hidden-description { display: none; }'
+        // clase CSS '.hidden-description { display: none; }'
         descriptionElement.classList.add('hidden-description'); 
 
         // 2. Crear el botón de "Ver descripción"
@@ -148,7 +148,7 @@ btnBorrar.addEventListener('click', () => {
 
 
 /* ==========================================
-   LÓGICA DEL CARRITO DINÁMICO (UNIFICADA) 
+   LÓGICA DEL CARRITO DINÁMICO
    ========================================== */
 
 // variable global para el array de productos en el carrito
@@ -176,7 +176,7 @@ function guardarCarrito() {
  */
 function actualizarContadorCarrito() {
     // La cuenta se basa en cuántos objetos hay en el array 'carrito'
-    // 💡 DEPENDENCIA: Requiere que 'cartCounterElement' esté declarado al inicio
+    // 'cartCounterElement' tiene que estar declarado al inicio
     cartCounterElement.textContent = carrito.length;
 }
 
@@ -336,7 +336,7 @@ function crearTarjetaProducto(producto) {
  */
 function cargarProductosDesdeAPI() {
     // 1. Mostrar un mensaje de carga
-    // 💡 DEPENDENCIA: Requiere que 'productosContainer' esté declarado al inicio
+    //  Requiere que 'productosContainer' esté declarado al inicio
     productosContainer.innerHTML = '<p style="text-align:center;">Cargando ofertas de la API externa...</p>';
 
     // 2. Usar fetch para obtener los datos
@@ -390,5 +390,5 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Asignar los eventos del carrito primero a los botones estáticos
     asignarEventosCarritoEstatico();
-    // cargarProductosDesdeAPI(); // Descomentar si quieres cargar los productos externos
+    cargarProductosDesdeAPI(); // Descomentar si quieres cargar los productos externos
 });

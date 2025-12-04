@@ -1,9 +1,9 @@
 /* Variables CSS para una paleta de colores y tipografía */
 :root {
-    --primary-color: #007bff; /* Un azul vibrante */
-    --secondary-color: #2c3e50; /* Un gris oscuro */
-    --tertiary-color: #f8f9fa; /* Un gris muy claro para fondos */
-    --accent-color: #ffc107; /* Un amarillo para acentos, como las estrellas */
+    --primary-color: #007bff; 
+    --secondary-color: #2c3e50; 
+    --tertiary-color: #f8f9fa; 
+    --accent-color: #ffc107; 
     --text-light: #fefefe;
     --text-dark: #333;
     --font-heading: 'Bebas Neue', sans-serif;
@@ -146,7 +146,7 @@ main {
 
 /* Nueva clase para ocultar/mostrar la descripción */
 .hidden-description {
-    display: none !important; /* ¡Importante usar !important si es necesario
+    display: none !important; /* usar !important si es necesario
                                 para anular otros estilos! */
 }
 
@@ -385,7 +385,7 @@ textarea:focus {
     padding: 8px 10px;
     margin-top: 10px;
     margin-bottom: 10px; /* Espacio debajo del botón */
-    background-color: #5c6bc0; /* Azul/Índigo */
+    background-color: #5c6bc0; 
     color: white;
     border: none;
     border-radius: 4px;
@@ -410,12 +410,7 @@ textarea:focus {
     font-style: italic; /* Estilo que se estaba aplicando en JS */
 }
 
-/* OPCIONAL: Si quieres ocultar la descripción estática original, puedes usar: */
-/*
-.product-item p {
-    display: none; 
-}
-*/
+
 
 /* --- ESTILOS NUEVOS PARA PREFERENCIAS --- */
 
@@ -445,7 +440,7 @@ textarea:focus {
     color: var(--primary-color);
     font-size: 2rem;
     margin-bottom: 0.5rem;
-    min-height: 2.5rem; /* Reserva espacio para que no "salte" al cargar */
+    min-height: 2.5rem; /* Reserve espacio para que no "salte" al cargar */
 }
 
 /* Botón extra para borrar preferencias */
@@ -476,7 +471,7 @@ textarea:focus {
     position: absolute;
     top: -8px;    /* Ajusta la altura */
     right: -12px; /* Ajusta la posición horizontal */
-    background-color: #dc3545; /* Rojo llamativo */
+    background-color: #dc3545; 
     color: white;
     font-size: 0.75rem;
     font-weight: bold;
@@ -491,7 +486,7 @@ textarea:focus {
     transition: transform 0.2s ease;
 }
 
-/* Pequeña animación cuando cambia el número (opcional) */
+/* Pequeña animación cuando cambia el número */
 .cart-counter.updated {
     transform: scale(1.3);
 }
