@@ -230,6 +230,28 @@
             </a>
         </div>
     </footer>
-    <script src="app.js"></script>
+    
+    
+    <aside id="cart-modal" class="cart-modal">
+    <div class="cart-content">
+        <header class="cart-header">
+            <h2>🛍️ Tu Carrito de Compras</h2>
+            <button id="close-cart-btn" class="close-btn">&times;</button>
+        </header>
+        
+        <div id="cart-items-container" class="cart-items-container">
+            <p class="empty-cart-message">Tu carrito está vacío.</p>
+        </div>
+
+        <footer class="cart-footer">
+            <div class="cart-total">
+                <strong>Total:</strong>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <button class="checkout-btn">Finalizar Compra</button>
+        </footer>
+    </div>
+    </aside>
+        <script src="app.js"></script>
 </body>
 </html>

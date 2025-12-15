@@ -15,19 +15,23 @@ const btnVaciar = document.getElementById('btn-vaciar-carrito');
 const API_URL = 'https://fakestoreapi.com/products?limit=6';
 const productosContainer = document.getElementById('productos-container'); 
 
+// ==========================================
+// Selectores del DOM para el MODAL del Carrito (NUEVOS)
+// ==========================================
+const cartModal = document.getElementById('cart-modal');
+const cartItemsContainer = document.getElementById('cart-items-container');
+const cartTotalPrice = document.getElementById('cart-total-price');
 
 
 function inicializarDescripcionDinamica() {
     // Usar el ID específico para seleccionar solo los productos estáticos
     const contenedorEstatico = document.getElementById('productos-estaticos');
     
-    // Si el contenedor no existe, salimos
     if (!contenedorEstatico) {
         console.warn("Contenedor de productos estáticos (#productos-estaticos) no encontrado.");
         return;
     }
     
-    // Ahora seleccionamos todos los artículos dentro de ese contenedor.
     const productItems = contenedorEstatico.querySelectorAll('.product-item');
 
     if (productItems.length === 0) {
@@ -36,16 +40,13 @@ function inicializarDescripcionDinamica() {
     }
 
     productItems.forEach(productItem => {
-        // Seleccionamos el párrafo de descripción original que está en el HTML
         const descriptionElement = productItem.querySelector('p');
         
-        // PREVENCIÓN DE DUPLICADOS: Si el botón ya existe, no hacemos nada
-        if (productItem.querySelector('.toggle-description-btn')) {
+        if (!descriptionElement || productItem.querySelector('.toggle-description-btn')) {
             return;
         }
 
-        // 1. Ocultar la descripción por defecto al cargar el script
-        // clase CSS '.hidden-description { display: none; }'
+        // 1. Ocultar la descripción por defecto
         descriptionElement.classList.add('hidden-description'); 
 
         // 2. Crear el botón de "Ver descripción"
@@ -55,26 +56,16 @@ function inicializarDescripcionDinamica() {
 
         // Insertar el botón en la tarjeta
         const productPrice = productItem.querySelector('.product-price');
-
-        // Insertar el botón ANTES del precio para que quede sobre el botón de carrito
         if (productPrice) {
             productItem.insertBefore(button, productPrice);
         } else {
             productItem.appendChild(button);
         }
 
-        // 3. Agregar el listener de eventos (addEventListener)
+        // 3. Agregar el listener de eventos
         button.addEventListener('click', () => {
-
-            // Alternar la visibilidad de la descripción original
             descriptionElement.classList.toggle('hidden-description');
-
-            // Actualizar el texto del botón basado en la nueva visibilidad
-            if (descriptionElement.classList.contains('hidden-description')) {
-                button.textContent = 'Ver descripción';
-            } else {
-                button.textContent = 'Ocultar descripción';
-            }
+            button.textContent = descriptionElement.classList.contains('hidden-description') ? 'Ver descripción' : 'Ocultar descripción';
         });
     });
 }
@@ -83,140 +74,122 @@ function inicializarDescripcionDinamica() {
    LÓGICA DE PREFERENCIAS DE USUARIO (LOCALSTORAGE)
    ========================================== */
 
-// 2. Función para aplicar las preferencias (UI Update)
 function aplicarPreferencias(nombre, color) {
-    // Aplicar color de fondo al body
     if (color) {
         document.body.style.backgroundColor = color;
-        // También actualizamos el valor del select para que coincida
-        colorSelect.value = color;
+        if (colorSelect) colorSelect.value = color;
     }
 
-    // Aplicar saludo personalizado
-    if (nombre) {
+    if (nombre && greetingElement) {
         greetingElement.textContent = `¡Hola de nuevo, ${nombre}!`;
-        // Actualizamos el input para que el usuario vea su nombre
-        nameInput.value = nombre;
-    } else {
-        greetingElement.textContent = ""; // Limpiar si no hay nombre
+        if (nameInput) nameInput.value = nombre;
+    } else if (greetingElement) {
+        greetingElement.textContent = ""; 
     }
 }
 
-// 3. Función para cargar datos al iniciar (Leer de LocalStorage)
 function cargarPreferencias() {
     const nombreGuardado = localStorage.getItem('usuarioNombre');
     const colorGuardado = localStorage.getItem('usuarioColor');
 
     if (nombreGuardado || colorGuardado) {
         aplicarPreferencias(nombreGuardado, colorGuardado);
-        console.log("Preferencias cargadas desde LocalStorage");
     }
 }
 
-// 4. Evento SUBMIT del formulario (Guardar en LocalStorage)
-preferencesForm.addEventListener('submit', (evento) => {
-    // Prevenir que la página se recargue
-    evento.preventDefault();
+if (preferencesForm) {
+    preferencesForm.addEventListener('submit', (evento) => {
+        evento.preventDefault();
 
-    // Capturar valores
-    const nombre = nameInput.value;
-    const color = colorSelect.value;
+        const nombre = nameInput.value;
+        const color = colorSelect.value;
 
-    // Guardar en LocalStorage
-    localStorage.setItem('usuarioNombre', nombre);
-    localStorage.setItem('usuarioColor', color);
+        localStorage.setItem('usuarioNombre', nombre);
+        localStorage.setItem('usuarioColor', color);
 
-    // Aplicar los cambios inmediatamente para dar feedback visual
-    aplicarPreferencias(nombre, color);
+        aplicarPreferencias(nombre, color);
 
-    alert('¡Preferencias guardadas con éxito!');
-});
+        alert('¡Preferencias guardadas con éxito!');
+    });
+}
 
-// 5. Evento para borrar preferencias (Opcional pero útil)
-btnBorrar.addEventListener('click', () => {
-    localStorage.removeItem('usuarioNombre');
-    localStorage.removeItem('usuarioColor');
+if (btnBorrar) {
+    btnBorrar.addEventListener('click', () => {
+        localStorage.removeItem('usuarioNombre');
+        localStorage.removeItem('usuarioColor');
 
-    // Restaurar valores por defecto
-    document.body.style.backgroundColor = ''; // Vuelve al color del CSS original
-    greetingElement.textContent = '';
-    nameInput.value = '';
-    colorSelect.selectedIndex = 0;
+        document.body.style.backgroundColor = ''; 
+        if (greetingElement) greetingElement.textContent = '';
+        if (nameInput) nameInput.value = '';
+        if (colorSelect) colorSelect.selectedIndex = 0;
 
-    alert('Preferencias borradas.');
-});
+        alert('Preferencias borradas.');
+    });
+}
 
 
 /* ==========================================
    LÓGICA DEL CARRITO DINÁMICO
    ========================================== */
 
-// variable global para el array de productos en el carrito
-let carrito = []; 
+let carrito = obtenerCarritoGuardado(); 
 
-/**
- * 1. Recupera el carrito guardado en localStorage o crea uno vacío.
- * @returns {Array} El carrito.
- */
 function obtenerCarritoGuardado() {
     const carritoJSON = localStorage.getItem('carrito');
     return carritoJSON ? JSON.parse(carritoJSON) : []; 
 }
 
-/**
- * 2. Guarda el estado actual del carrito en localStorage.
- */
 function guardarCarrito() {
     localStorage.setItem('carrito', JSON.stringify(carrito));
     actualizarContadorCarrito(); 
 }
 
-/**
- * 3. Muestra la cantidad total de ítems en el carrito.
- */
 function actualizarContadorCarrito() {
-    // La cuenta se basa en cuántos objetos hay en el array 'carrito'
-    // 'cartCounterElement' tiene que estar declarado al inicio
-    cartCounterElement.textContent = carrito.length;
+    if (cartCounterElement) {
+        cartCounterElement.textContent = carrito.length;
+    }
 }
 
-/**
- * 4. Añade un producto al array del carrito y lo guarda.
- * @param {Object} producto - El objeto completo del producto a añadir.
- */
-function agregarProductoAlCarrito(producto) {
-    carrito.push(producto); 
+const agregarProductoAlCarrito = (producto) => {
+    const itemEnCarrito = carrito.find(item => String(item.id) === String(producto.id));
+
+    if (itemEnCarrito) {
+        itemEnCarrito.quantity++;
+    } else {
+        carrito.push({
+            id: producto.id || producto.title.replace(/\s/g, '-'),
+            title: producto.title,
+            price: producto.price,
+            image: producto.image || '',
+            quantity: 1
+        });
+    }
+
     guardarCarrito();
-    //usar alert o console.log para el feedback
-    alert(`🛒 ¡Producto añadido! ${producto.title}`); // 💡 CAMBIO: Usamos alert para el feedback solicitado.
-    console.log(`🛒 ¡Producto añadido! ${producto.title}. Total: ${carrito.length}`);
-}
+    mostrarCarrito(); 
+    
+    // Mensaje de confirmación temporal
+    alert(`🎉 ¡"${producto.title}" se añadió al carrito!`); 
+};
 
-/**
- * 5. Inicializa el carrito al cargar la página.
- */
 function inicializarCarritoDinamico() {
     carrito = obtenerCarritoGuardado();
     actualizarContadorCarrito();
 }
 
-/**
- * Asigna el manejador de eventos a todos los botones 'Agregar al carrito' de los productos de la API.
- * @param {Array<Object>} productosAPI - El array completo de objetos de productos de la API.
- */
 function asignarEventosCarritoAPI(productosAPI) {
-    // Seleccionamos los botones de los productos DINÁMICOS (cargados en #productos-container)
+    if (!productosContainer) return;
+    
     const addToCartButtons = productosContainer.querySelectorAll('.product-item .add-to-cart');
     
     addToCartButtons.forEach(button => {
-        // Encontramos el elemento padre (la tarjeta)
         const productItem = button.closest('.product-item');
         
         button.addEventListener('click', function() {
-            // Obtenemos el título (identificador) del producto desde la tarjeta.
-            const title = productItem.querySelector('h3').textContent;
-            
-            // Buscamos el objeto completo en el array de la API usando el título como clave.
+            const titleElement = productItem.querySelector('h3');
+            if (!titleElement) return;
+
+            const title = titleElement.textContent;
             const productoAAgregar = productosAPI.find(p => p.title === title);
 
             if (productoAAgregar) {
@@ -228,34 +201,28 @@ function asignarEventosCarritoAPI(productosAPI) {
     });
 }
 
-/**
- * Manejador de click para productos estáticos (obtiene la data del DOM).
- */
 function manejarClickEstatico() {
-    const boton = this; // El botón clickeado
-    const productItem = boton.closest('.product-item'); // La tarjeta contenedora
+    const boton = this;
+    const productItem = boton.closest('.product-item');
 
-    // 1. Obtener los datos necesarios para crear el objeto Producto
     const title = productItem.querySelector('h3').textContent;
     const priceText = productItem.querySelector('.product-price').textContent.replace('$', '').replace(',', '');
     const price = parseFloat(priceText);
 
-    // 2. Crear un objeto producto (con ID simple para los estáticos)
     const productoEstatico = {
-        id: title.replace(/\s/g, '-'), // ID simple basado en el título
+        id: title.replace(/\s/g, '-'),
         title: title,
         price: price,
+        image: productItem.querySelector('img').src || '',
     };
 
-    // 3. Agregar al carrito y guardar
     agregarProductoAlCarrito(productoEstatico);
 
-    // 4. Feedback visual
     const textoOriginal = boton.innerHTML;
     const colorOriginal = boton.style.backgroundColor || '';
 
     boton.innerHTML = '<i class="fas fa-check"></i> ¡Agregado!';
-    boton.style.backgroundColor = '#28a745'; // Verde
+    boton.style.backgroundColor = '#28a745';
 
     setTimeout(() => {
         boton.innerHTML = textoOriginal;
@@ -263,58 +230,133 @@ function manejarClickEstatico() {
     }, 1000);
 }
 
-
-/**
- * Asigna el manejador de eventos a los botones de los productos ESTÁTICOS.
- */
 function asignarEventosCarritoEstatico() {
     const addToCartButtons = document.querySelectorAll('.product-grid .add-to-cart');
     
     addToCartButtons.forEach(button => {
-        // Aseguramos que el evento solo se añade una vez
         button.removeEventListener('click', manejarClickEstatico); 
         button.addEventListener('click', manejarClickEstatico);
     });
-    console.log(`Eventos de carrito asignados a ${addToCartButtons.length} botones estáticos.`);
 }
 
+if (btnVaciar) {
+    btnVaciar.addEventListener('click', () => {
+        const confirmar = confirm('¿Estás seguro de que quieres vaciar el carrito?');
+
+        if (confirmar) {
+            carrito = []; 
+            guardarCarrito(); 
+            mostrarCarrito(); 
+            alert('El carrito ha sido vaciado.');
+        }
+    });
+}
 
 /* ==========================================
-   LÓGICA PARA VACIAR EL CARRITO 
+   LÓGICA DEL MODAL DEL CARRITO
    ========================================== */
 
-// 💡 CORRECCIÓN: Se usa la variable 'btnVaciar' declarada arriba y la lógica de 'carrito'
-btnVaciar.addEventListener('click', () => {
-    const confirmar = confirm('¿Estás seguro de que quieres vaciar el carrito?');
-
-    if (confirmar) {
-        // 1. Limpiar el array global del carrito
-        carrito = []; 
-        
-        // 2. Limpiar el localStorage y actualizar el contador visual
-        guardarCarrito(); 
-
-        alert('El carrito ha sido vaciado.');
+const toggleCarritoModal = () => {
+    if (cartModal) {
+        cartModal.classList.toggle('open');
     }
-});
+};
+
+const gestionarCantidadProducto = (id, accion) => {
+    const itemIndex = carrito.findIndex(item => String(item.id) === String(id));
+    
+    if (itemIndex > -1) {
+        if (accion === 'increase') {
+            carrito[itemIndex].quantity++;
+        } else if (accion === 'decrease') {
+            carrito[itemIndex].quantity--;
+            if (carrito[itemIndex].quantity < 1) {
+                carrito.splice(itemIndex, 1);
+            }
+        } else if (accion === 'remove') {
+            carrito.splice(itemIndex, 1);
+        }
+
+        guardarCarrito();
+        mostrarCarrito(); 
+    }
+};
+
+const asignarEventosCarritoModal = () => {
+    if (!cartItemsContainer) return;
+
+    cartItemsContainer.querySelectorAll('.quantity-btn, .remove-item-btn').forEach(btn => {
+        const id = btn.dataset.id;
+        
+        // Usamos una función anónima para que se pueda reasignar sin problemas
+        btn.onclick = (e) => {
+            e.preventDefault();
+            if (e.target.classList.contains('increase-btn')) {
+                gestionarCantidadProducto(id, 'increase');
+            } else if (e.target.classList.contains('decrease-btn')) {
+                gestionarCantidadProducto(id, 'decrease');
+            } else if (e.target.classList.contains('remove-item-btn')) {
+                gestionarCantidadProducto(id, 'remove');
+            }
+        };
+    });
+};
+
+const mostrarCarrito = () => {
+    if (!cartModal || !cartItemsContainer || !cartTotalPrice) {
+        console.error("Error: Elementos del modal de carrito no encontrados en el DOM.");
+        return;
+    }
+
+    // 1. Asegura que el modal esté abierto
+    cartModal.classList.add('open');
+    
+    let total = 0;
+    let htmlContent = '';
+
+    if (carrito.length === 0) {
+        htmlContent = '<p class="empty-cart-message">Tu carrito está vacío. ¡Añade productos!</p>';
+        cartTotalPrice.textContent = '$0.00';
+    } else {
+        carrito.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal; 
+
+            htmlContent += `
+                <div class="cart-item" data-item-id="${item.id}">
+                    <img src="${item.image}" alt="${item.title}" style="width: 50px; height: 50px; object-fit: contain;">
+                    <div class="cart-item-info">
+                        <strong>${item.title}</strong>
+                        <p>$${item.price.toFixed(2)} c/u</p>
+                    </div>
+                    <div class="item-quantity">
+                        <button class="quantity-btn decrease-btn" data-id="${item.id}">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn increase-btn" data-id="${item.id}">+</button>
+                    </div>
+                    <button class="remove-item-btn" data-id="${item.id}">X</button>
+                </div>
+            `;
+        });
+        
+        cartTotalPrice.textContent = `$${total.toFixed(2)}`;
+    }
+
+    cartItemsContainer.innerHTML = htmlContent;
+    asignarEventosCarritoModal();
+};
 
 
 /* ==========================================
    CONSUMIR API REST CON FETCH 
    ========================================== */
 
-/**
- * Crea la estructura HTML para una tarjeta de producto.
- * @param {Object} producto - Objeto de producto de la API.
- */
 function crearTarjetaProducto(producto) {
-    // Crear el artículo principal de la tarjeta
     const article = document.createElement('article');
     article.className = 'product-item';
 
-    // Usar la categoría como parte del alt para más contexto
     const altText = `Producto: ${producto.title}, Categoría: ${producto.category}`;
-    const formattedPrice = producto.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Formato de precio USD
+    const formattedPrice = producto.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
 
     article.innerHTML = `
         <img src="${producto.image}" alt="${altText}">
@@ -330,65 +372,72 @@ function crearTarjetaProducto(producto) {
 }
 
 
-/**
- * Obtiene los productos de la API y los renderiza en el DOM,
- * y luego asigna los eventos de carrito específicos a los nuevos botones.
- */
 function cargarProductosDesdeAPI() {
-    // 1. Mostrar un mensaje de carga
-    //  Requiere que 'productosContainer' esté declarado al inicio
+    if (!productosContainer) return;
+    
     productosContainer.innerHTML = '<p style="text-align:center;">Cargando ofertas de la API externa...</p>';
 
-    // 2. Usar fetch para obtener los datos
     fetch(API_URL)
         .then(response => {
-            // Verificar si la respuesta fue exitosa (status 200-299)
             if (!response.ok) {
-                // Si la respuesta no es OK, lanza un error que será capturado por el .catch
                 throw new Error(`Error de red: ${response.status}`);
             }
-            return response.json(); // Convertir la respuesta a JSON
+            return response.json();
         })
         .then(productos => {
-            // 3. Limpiar el mensaje de carga
             productosContainer.innerHTML = '';
 
-            // 4. Recorrer los productos y renderizar las tarjetas
             productos.forEach(producto => {
                 const tarjeta = crearTarjetaProducto(producto);
                 productosContainer.appendChild(tarjeta);
             });
 
-            // 5. Asignar eventos de carrito a los botones de los productos de la API.
             asignarEventosCarritoAPI(productos);
-
-            console.log("Productos cargados desde la API con éxito.");
         })
         .catch(error => {
-            // 6. Manejo de errores
             console.error('Error al cargar los productos de la API:', error);
-            productosContainer.innerHTML = `
-                <p style="color: red; text-align: center; padding: 20px; border: 1px dashed red;">
-                    ❌ **¡Alerta!** Error al cargar los productos de la API. Por favor, inténtalo más tarde. (Detalle: ${error.message})
-                </p>
-            `;
+            productosContainer.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">❌ Error al cargar productos: ${error.message}</p>`;
         });
 }
 
 
 /* ==========================================
-   EJECUCIÓN INICIAL
+   INICIALIZACIÓN: SE EJECUTA AL CARGAR EL DOM
    ========================================== */
 
-// "DOMContentLoaded" asegura que el HTML esté listo antes de ejecutar JS
-document.addEventListener('DOMContentLoaded', () => {
+function init() {
     cargarPreferencias();
-    inicializarCarritoDinamico();
+    cargarProductosDesdeAPI();
+    inicializarDescripcionDinamica();
+    asignarEventosCarritoEstatico(); 
+    inicializarCarritoDinamico(); 
+
+    // --- EVENT LISTENERS PARA EL MODAL DEL CARRITO ---
     
-    // Inicializar la descripción dinámica para los productos estáticos
-    inicializarDescripcionDinamica(); 
+    const closeCartBtn = document.getElementById('close-cart-btn');
+    if (closeCartBtn) {
+        closeCartBtn.addEventListener('click', toggleCarritoModal);
+    }
     
-    // Asignar los eventos del carrito primero a los botones estáticos
-    asignarEventosCarritoEstatico();
-    cargarProductosDesdeAPI(); // Descomentar si quieres cargar los productos externos
-});
+    const cartIconContainer = document.querySelector('.cart-icon-container a'); // Selecciona el <a> dentro del li
+    if (cartIconContainer) {
+        cartIconContainer.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            
+            // al hacer click en el icono siempre abre el carrito
+            if (!e.target.closest('#btn-vaciar-carrito')) {
+                 mostrarCarrito(); 
+            }
+        });
+    }
+
+    if (cartModal) {
+        cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                toggleCarritoModal();
+            }
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', init);
